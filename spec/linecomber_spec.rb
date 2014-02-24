@@ -6,13 +6,13 @@ describe Linecomber::Comber do
       Linecomber::Comber.comb("",[]).should eql("")
     end
     it "it should return blank when filter has one entry" do
-      Linecomber::Comber.comb("", [ /Class descriptor.*;/]).should eql("")
+      Linecomber::Comber.comb("", [ /Test/]).should eql("")
     end
   end
 
 
-  it "should return original line when filter has no entry" do
-    Linecomber::Comber.comb("Display this", [ ]).should eql("Display this")
+  it "should return blank line when filter has no entry" do
+    Linecomber::Comber.comb("Display this", [ ]).should eql("")
   end
 
   context "when there is a beginMark-endMark filter" do
