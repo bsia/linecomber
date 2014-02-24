@@ -1,7 +1,7 @@
 
 module Linecomber
   class Comber
-    def self.comb(lines, filters)
+    def self.comb_lines(lines, filters)
       collated = ""
       capture = false
       @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor) ]
@@ -49,6 +49,9 @@ module Linecomber
       end
     end
 
+    def self.comb(line, filters)
+      comb_lines(line, filters)
+    end
   end
 end
 
