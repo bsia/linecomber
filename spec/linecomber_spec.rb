@@ -16,14 +16,22 @@ describe Linecomber::Comber do
   end
 
   context "when there is a beginMark-endMark filter" do
-    filter = { :begin => /^Class.*{/, :end => /^};/ }
+    filter = { :begin => /^class.*{/, :end => /^};/ }
     it "should return only lines within begin and end matchers" do
-      data = "Bogus\nClass something {\nint x;\n};\nBogus At End\n"
-      Linecomber::Comber.comb_lines(data, filter).should eql("Class something {\nint x;\n};\n")
+      data = "Bogus\nclass something {\n    int x;\n};\nBogus At End\n"
+      Linecomber::Comber.comb_lines(data, filter).should eql("class something {\n    int x;\n};\n")
+    end
+
+    it "should read a file and return only contents within begin and end matchers" do
+      Linecomber::Comber.comb(get_test_file, filter).should eql("class something {\n    int x;\n};\n")
     end
 
   end
 
+
+  def get_test_file
+    File.join(Dir.getwd, "test_data", "test_file.txt")
+  end
 
 end
 

@@ -4,9 +4,9 @@ module Linecomber
 
     def self.comb_each(line_collection, filters, processors)
       collated = ""
-      line_collection.each do |l|
+      line_collection.each_line do |l|
         ret = process_line(l, filters, @@processors)
-        collated = "#{collated}#{ret}\n" unless ret.nil?
+        collated = "#{collated}#{ret}" unless ret.nil?
       end
       collated 
     end
@@ -14,7 +14,7 @@ module Linecomber
     def self.comb_lines(lines, filters)
       @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor) ]
       init_begin_end_processors
-      comb_each(lines.split("\n"), filters, @@processors)
+      comb_each(lines, filters, @@processors)
     end
 
     def self.process_line(line, filters, processors)
@@ -54,8 +54,9 @@ module Linecomber
     end
 
     def self.comb(filename, filters)
-      lines = 
-      comb_lines(lines, filters)
+      File.open(filename, "r") do |handle|
+        comb_lines(handle, filters)
+      end
     end
   end
 end

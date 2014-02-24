@@ -1,0 +1,12 @@
+Bogus data;
+
+class something {
+    int x;
+};
+
+Another onehere;
+
+Yeah()
+{
+}
+
