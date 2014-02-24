@@ -1,16 +1,20 @@
 
 module Linecomber
   class Comber
-    def self.comb_lines(lines, filters)
+
+    def self.comb_each(line_collection, filters, processors)
       collated = ""
-      capture = false
-      @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor) ]
-      init_begin_end_processors
-      lines.split("\n").each do |l|
+      line_collection.each do |l|
         ret = process_line(l, filters, @@processors)
         collated = "#{collated}#{ret}\n" unless ret.nil?
       end
       collated 
+    end
+
+    def self.comb_lines(lines, filters)
+      @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor) ]
+      init_begin_end_processors
+      comb_each(lines.split("\n"), filters, @@processors)
     end
 
     def self.process_line(line, filters, processors)
@@ -49,8 +53,9 @@ module Linecomber
       end
     end
 
-    def self.comb(line, filters)
-      comb_lines(line, filters)
+    def self.comb(filename, filters)
+      lines = 
+      comb_lines(lines, filters)
     end
   end
 end
