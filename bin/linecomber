@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'linecomber/cli'
+Linecomber::CLI.start
+
+
