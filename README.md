@@ -1,6 +1,6 @@
 # Linecomber
 
-TODO: Write a gem description
+Ruby-based tool for scouring text files, line by line.
 
 ## Installation
 
