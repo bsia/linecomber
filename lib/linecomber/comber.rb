@@ -13,7 +13,6 @@ module Linecomber
     end
 
     def self.comb_lines(lines, filters)
-#      @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor), method(:default_processor) ]
       @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor) ]
       init_begin_end_processors
       comb_each(lines, filters, @@processors)
