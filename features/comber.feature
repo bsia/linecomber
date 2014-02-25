@@ -4,9 +4,9 @@ Feature: Comb through a text file and remove irrelevant lines
     I want to see only relevant lines from a text file
 
     Scenario: Display the lines of a file marked between begin and end matchers
-        When I run `linecomber comb --filters begin:'^Class.*' end:'};' --file=../../test_data/test_file.txt`
-        Then the output should contain "Test"
+        When I run `linecomber comb --filters begin:'^class.*' end:'};' --file=../../test_data/test_file.txt`
+        Then the output should contain "class something {\n    int x;\n};\n"
 
     Scenario: Display no lines 
         When I run `linecomber comb --file=../../test_data/test_file.txt`
-        Then the output should contain "Test"
+        Then the output should not contain "class"
