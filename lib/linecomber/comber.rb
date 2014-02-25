@@ -1,3 +1,4 @@
+require 'iconv'
 
 module Linecomber
   class Comber
@@ -12,6 +13,7 @@ module Linecomber
     end
 
     def self.comb_lines(lines, filters)
+#      @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor), method(:default_processor) ]
       @@processors = [ method(:begin_processor), method(:print_processor), method(:end_processor) ]
       init_begin_end_processors
       comb_each(lines, filters, @@processors)
@@ -32,16 +34,12 @@ module Linecomber
     end
 
     def self.begin_processor(line, filters)
-      if line =~ filters[:begin] then
-        @@begin_printing = true
-      end
+      @@begin_printing = true if match_line(line, filters[:begin])
       line
     end
 
     def self.end_processor(line, filters)
-      if line =~ filters[:end] then
-        @@begin_printing = false
-      end
+      @@begin_printing = false if match_line(line, filters[:end])
       line
     end
 
@@ -53,10 +51,21 @@ module Linecomber
       end
     end
 
+    def self.default_processor(line, filters)
+      return line if line =~ filters[:default]
+      nil
+    end
+
     def self.comb(filename, filters)
       File.open(filename, "r") do |handle|
         comb_lines(handle, filters)
       end
+    end
+
+    def self.match_line(line, matcher)
+      ic = Iconv.new('UTF-8//IGNORE', 'UTF-8')
+      valid_string = ic.iconv(line + ' ')[0..-2]
+      valid_string =~ matcher
     end
   end
 end

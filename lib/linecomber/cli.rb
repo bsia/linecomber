@@ -9,9 +9,9 @@ module Linecomber
     method_option :filters, :type => :hash, :aliases => "-i"
     method_option :file, :type => :string, :aliases => "-f"
     def comb
-      filename = options[:file]
+      filename = File.expand_path(options[:file])
       filters = Linecomber::Util::create_filters options[:filters]
-      #puts "This is the filters = #{filters}"
+      puts "This is the file = #{filename}"
       puts Linecomber::Comber.comb(filename, filters)
     end
 
