@@ -1,3 +1,4 @@
+
 # Linecomber
 
 Ruby-based tool for scouring text files, line by line.
